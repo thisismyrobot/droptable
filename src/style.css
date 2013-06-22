@@ -13,8 +13,18 @@ textarea
     height:100%;
 }
 
-.dropicon
+.dropped
 {
     position: absolute;
     cursor: pointer;
+}
+
+.snippet
+{
+    border:1px solid black;
+    background-color: silver;
+    width: 100px;
+    height: 100px;
+    padding: 5px;
+    overflow: hidden;
 }

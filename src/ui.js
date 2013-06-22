@@ -4,7 +4,20 @@ droptable.ui = {
     */
     iconbase: function(x, y)
     {
-        var icon = $('<div class="dropicon url"></div>');
+        var icon = $('<div class="dropped icon url"></div>');
+        icon.css({
+            top: y,
+            left: x
+        });
+        return icon;
+    },
+
+    /*
+        Creates the basic snippet html
+    */
+    snippetbase: function(x, y)
+    {
+        var icon = $('<div class="dropped snippet text"></div>');
         icon.css({
             top: y,
             left: x
@@ -27,19 +40,25 @@ droptable.ui = {
             return;
         }
 
-        var artifact = null;
+        var artefact = null;
         var dropData = new DropData(dropEvent.pageX, dropEvent.pageY);
         if (types.contains('text/uri-list'))
         {
             dropData.data = dropEvent.dataTransfer.getData('text/uri-list');
-            artifact = droptable.handlers.url(dropData);
+            artefact = droptable.handlers.url(dropData);
+        }
+        else if (types.contains('text/plain') || types.contains('text'))
+        {
+            dropData.data = dropEvent.dataTransfer.getData('text/plain');
+            dropData.data = dropData.data || dropEvent.dataTransfer.getData('text/');
+            artefact = droptable.handlers.text(dropData);
         }
 
-        // post-condition the artifact if we have one
-        if (artifact !== null)
+        // post-condition the artefact if we have one
+        if (artefact !== null)
         {
-            $('#droptable').append(artifact);
-            $(artifact).draggable();
+            $('#droptable').append(artefact);
+            $(artefact).draggable();
         }
     }
 }
