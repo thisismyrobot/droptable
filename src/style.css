@@ -16,4 +16,5 @@ textarea
 .dropicon
 {
     position: absolute;
+    cursor: pointer;
 }

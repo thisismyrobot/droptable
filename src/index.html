@@ -4,51 +4,11 @@
         <link rel="stylesheet" type="text/css" href="style.css" />
         <script type="text/javascript" src="jquery-1.10.1.min.js"></script>
         <script type="text/javascript" src="jquery-ui-1.10.3.custom.min.js"></script>
+        <script type="text/javascript" src="setup.js"></script>
         <script type="text/javascript" src="helpers.js"></script>
         <script type="text/javascript" src="handlers.js"></script>
         <script type="text/javascript" src="models.js"></script>
-        <script type="text/javascript">
-
-            function handleDrop(dropEvent)
-            {
-                dropEvent.preventDefault();
-                x = dropEvent.pageX;
-                y = dropEvent.pageY;
-
-                types = dropEvent.dataTransfer.types;
-                if(types.length == 0)
-                {
-                    return;
-                }
-
-                var artifact = null;
-                var dropData = new DropData(dropEvent.pageX, dropEvent.pageY);
-                if (types.contains('text/uri-list'))
-                {
-                    dropData.data = dropEvent.dataTransfer.getData('text/uri-list');
-                    artifact = url(dropData);
-                }
-
-                // post-condition the artifact if we have one
-                if (artifact !== null)
-                {
-                    $('#droptable').append(artifact);
-                    $(artifact).draggable();
-                }
-            }
-
-            $(document).ready(function()
-            {
-                $("#droptable")
-                    .bind("dragover", false)
-                    .bind("dragenter", false)
-                    .bind("drop", function(e) {
-                        handleDrop(e.originalEvent);
-                        return false;
-                });
-            });
-
-        </script>
+        <script type="text/javascript" src="ui.js"></script>
     </head>
     <body>
         <div id="droptable"></div>
