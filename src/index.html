@@ -15,8 +15,15 @@
                 width:100%;
                 height:100%;
             }
+            .dropicon
+            {
+                position: absolute;
+            }
         </style>
         <script type="text/javascript" src="jquery-1.10.1.min.js"></script>
+        <script type="text/javascript" src="helpers.js"></script>
+        <script type="text/javascript" src="handlers.js"></script>
+        <script type="text/javascript" src="models.js"></script>
         <script type="text/javascript">
 
             function handleDrop(dropEvent)
@@ -25,21 +32,18 @@
                 x = dropEvent.pageX;
                 y = dropEvent.pageY;
 
-                content = 'Dropped (' + x + ', ' + y + '):\n';
-                for (i=0; i<dropEvent.dataTransfer.types.length; i++)
+                types = dropEvent.dataTransfer.types;
+                if(types.length == 0)
                 {
-                    droppedType = dropEvent.dataTransfer.types[i];
-                    content += ' * ' + droppedType + '\n';
-                    if (droppedType == "Files")
-                    {
-                        console.log(dropEvent.dataTransfer);
-                    }
-                    else
-                    {
-                        content += '   => ' + dropEvent.dataTransfer.getData(droppedType) + '\n';
-                    }
+                    return;
                 }
-                $('#droptable').html(content);
+
+                var dropData = new DropData(dropEvent.pageX, dropEvent.pageY);
+                if (types.contains('text/uri-list'))
+                {
+                    dropData.data = dropEvent.dataTransfer.getData('text/uri-list');
+                    url(dropData);
+                }
             }
 
             $(document).ready(function()
