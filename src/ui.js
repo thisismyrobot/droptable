@@ -1,4 +1,20 @@
 droptable.ui = {
+    /*
+        Creates the basic icon html
+    */
+    iconbase: function(x, y)
+    {
+        var icon = $('<div class="dropicon url"></div>');
+        icon.css({
+            top: y,
+            left: x
+        });
+        return icon;
+    },
+
+    /*
+        Handles drop events.
+    */
     handleDrop: function (dropEvent)
     {
         dropEvent.preventDefault();
