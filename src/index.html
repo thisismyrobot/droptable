@@ -21,6 +21,7 @@
             }
         </style>
         <script type="text/javascript" src="jquery-1.10.1.min.js"></script>
+        <script type="text/javascript" src="jquery-ui-1.10.3.custom.min.js"></script>
         <script type="text/javascript" src="helpers.js"></script>
         <script type="text/javascript" src="handlers.js"></script>
         <script type="text/javascript" src="models.js"></script>
@@ -38,11 +39,19 @@
                     return;
                 }
 
+                var artifact = null;
                 var dropData = new DropData(dropEvent.pageX, dropEvent.pageY);
                 if (types.contains('text/uri-list'))
                 {
                     dropData.data = dropEvent.dataTransfer.getData('text/uri-list');
-                    url(dropData);
+                    artifact = url(dropData);
+                }
+
+                // post-condition the artifact if we have one
+                if (artifact !== null)
+                {
+                    $('#droptable').append(artifact);
+                    $(artifact).draggable();
                 }
             }
 

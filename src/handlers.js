@@ -1,8 +1,7 @@
 /*
     Handlers for the different file types.
 
-    Every handler takes the DropData object, rendering something in the
-    #droptable div.
+    Every handler takes the DropData object, returning an html element;
 */
 
 function url(dropData)
@@ -13,5 +12,5 @@ function url(dropData)
         top: dropData.y,
         left: dropData.x 
     });
-    $('#droptable').append(icon);
+    return icon;
 }
