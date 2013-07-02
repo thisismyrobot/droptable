@@ -64,6 +64,7 @@ droptable.ui = {
             var artefact = artefactHandler(dropData);
             $('#droptable').append(artefact);
             $(artefact).draggable();
+            droptable.storage.newItem(dropData);
         }
     }
 }
