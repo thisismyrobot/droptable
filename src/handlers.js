@@ -12,6 +12,7 @@ droptable.handlers = {
         var icon = droptable.ui.iconbase(dropData.x, dropData.y);
         var link = $('<a href="" target="_new"></a>');
         link.text(dropData.data);
+        link.attr('href', dropData.data);
         icon.append(link);
         return icon;
     },
