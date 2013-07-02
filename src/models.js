@@ -1,6 +1,7 @@
-function DropData(x, y)
+function DropData(x, y, data, type)
 {
     this.x = x;
     this.y = y;
-    this.data = '';
+    this.data = data;
+    this.type = type;
 }

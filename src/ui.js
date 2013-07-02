@@ -31,32 +31,37 @@ droptable.ui = {
     handleDrop: function (dropEvent)
     {
         dropEvent.preventDefault();
-        x = dropEvent.pageX;
-        y = dropEvent.pageY;
+        var x = dropEvent.pageX;
+        var y = dropEvent.pageY;
 
-        types = dropEvent.dataTransfer.types;
+        var types = dropEvent.dataTransfer.types;
         if(types.length == 0)
         {
             return;
         }
 
-        var artefact = null;
-        var dropData = new DropData(dropEvent.pageX, dropEvent.pageY);
+        // Parse out the data from the event
+        var artefactHandler = data = type = null;
         if (types.contains('text/uri-list'))
         {
-            dropData.data = dropEvent.dataTransfer.getData('text/uri-list');
-            artefact = droptable.handlers.url(dropData);
+            data = dropEvent.dataTransfer.getData('text/uri-list');
+            type = 'text/uri-list';
+            artefactHandler = droptable.handlers.url;
         }
         else if (types.contains('text/plain') || types.contains('text'))
         {
-            dropData.data = dropEvent.dataTransfer.getData('text/plain');
-            dropData.data = dropData.data || dropEvent.dataTransfer.getData('text/');
-            artefact = droptable.handlers.text(dropData);
+            data = dropEvent.dataTransfer.getData('text/plain');
+            data = data || dropEvent.dataTransfer.getData('text/');
+            type = 'text/plain';
+            artefactHandler = droptable.handlers.text;
         }
 
-        // post-condition the artefact if we have one
-        if (artefact !== null)
+        // Get and process the data if we have a handler
+        if (artefactHandler !== null)
         {
+            var dropData = new DropData(dropEvent.pageX, dropEvent.pageY,
+                                        data, type);
+            var artefact = artefactHandler(dropData);
             $('#droptable').append(artefact);
             $(artefact).draggable();
         }
